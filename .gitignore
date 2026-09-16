@@ -1,0 +1,10 @@
+.env
+config.json
+.venv/
+node_modules/
+__pycache__/
+*.pyc
+data/
+original-backups/
+*.sqlite3*
+test-results/

@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: arus-modern
+    runtime: docker
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: ARUS_HOST
+        value: 0.0.0.0
+      - key: ARUS_ALLOW_REGISTER
+        value: "false"
+      - key: DATABASE_URL
+        sync: false
+      - key: ARUS_APP_URL
+        sync: false
+      - key: ARUS_SCHEDULER
+        value: "false"
+      - key: GMAIL_GATEWAY_URL
+        sync: false
+      - key: GMAIL_GATEWAY_SECRET
+        sync: false
+      - key: ARUS_CRON_SECRET
+        sync: false
