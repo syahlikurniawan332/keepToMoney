@@ -110,7 +110,7 @@ beforeEach(() => {
             csrf: "csrf",
             smtp: false,
             ai_model: "",
-            registration: false,
+            registration: true,
           }),
         };
       if (path === "state")
@@ -140,6 +140,14 @@ async function login() {
   return user;
 }
 describe("React user flows", () => {
+  it("shows and opens account registration", async () => {
+    const user = userEvent.setup();
+    render(<App />);
+    await user.click(await screen.findByRole("button", { name: "Buat akun baru" }));
+    expect(screen.getByRole("heading", { name: "Mulai perjalanan Anda." })).toBeTruthy();
+    expect(screen.getByLabelText("Nama tampilan")).toBeTruthy();
+    expect(screen.getByRole("button", { name: /^Buat akun$/ })).toBeTruthy();
+  });
   it("logs in and opens all seven pages", async () => {
     const user = await login();
     expect(screen.getByText("Makan siang")).toBeTruthy();

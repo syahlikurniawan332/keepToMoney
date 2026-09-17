@@ -323,6 +323,17 @@ export function App() {
     location.hash = "page=" + p;
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
+  async function logout() {
+    try {
+      await api("logout", {});
+      setSession(null);
+      setData(null);
+      setMobile(false);
+      location.hash = "";
+    } catch (e) {
+      setToast((e as Error).message);
+    }
+  }
   const toastNode = (
     <div className={"toast " + (toast ? "visible" : "")} role="status">
       <Check size={18} />
@@ -469,21 +480,6 @@ export function App() {
               </span>
               <ChevronRight size={17} />
             </button>
-            <button
-              className="logout"
-              onClick={async () => {
-                try {
-                  await api("logout", {});
-                  setSession(null);
-                  setData(null);
-                } catch (e) {
-                  setToast((e as Error).message);
-                }
-              }}
-            >
-              <LogOut size={16} />
-              Keluar akun
-            </button>
           </div>
         </aside>
         <div className="app-body">
@@ -513,16 +509,10 @@ export function App() {
               >
                 {dark ? <Sun size={19} /> : <Moon size={19} />}
               </Button>
-              <Button
-                variant="icon"
-                aria-label="Pengaturan email"
-                onClick={() => go("settings")}
-              >
-                <Mail size={19} />
+              <Button variant="subtle topbar-logout" onClick={logout}>
+                <LogOut size={16} />
+                Keluar
               </Button>
-              <span className="avatar small">
-                {s.preferences.name.slice(0, 1).toUpperCase()}
-              </span>
             </div>
           </div>
           <main id="main" key={page} className="main page-enter">

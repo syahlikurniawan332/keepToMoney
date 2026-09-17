@@ -431,6 +431,20 @@ button:active:not(:disabled) {
   align-items: center;
   gap: 14px;
 }
+.topbar-logout {
+  color: #9b433d;
+  border-color: #edd6d2;
+  background: #fff8f6;
+}
+.topbar-logout:hover {
+  color: #873630;
+  background: #fff0ed;
+}
+[data-theme="dark"] .topbar-logout {
+  color: #efaaa3;
+  border-color: #65413e;
+  background: #352725;
+}
 .connection {
   font-size: 10px;
   color: var(--muted);

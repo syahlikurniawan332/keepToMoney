@@ -2,6 +2,9 @@
 
 Aplikasi keuangan pribadi dengan React + TypeScript, FastAPI, SQLite lokal, dan adapter PostgreSQL untuk hosting. Dibangun dari Arus Lokal v1.3 dan draft spesifikasi yang disertakan, dengan login username yang dipertahankan sesuai permintaan.
 
+Pendaftaran akun baru aktif secara default. Jika suatu saat ingin menutup
+pendaftaran, isi `ARUS_ALLOW_REGISTER=false` pada `.env`.
+
 ## Mulai di Windows
 
 1. Ekstrak seluruh ZIP, misalnya ke `D:\Belajar\Arus-Modern`. Jangan menjalankan dari dalam ZIP.

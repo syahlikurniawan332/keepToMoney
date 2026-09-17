@@ -283,7 +283,7 @@ class Handler(BaseHTTPRequestHandler):
             with LOCK,db() as c:
                 sess=self.session(c)
                 if path=='/api/session' and not post:
-                    return self.respond(200,dict(user=dict(id=sess['user_id'],username=sess['username'],email=sess['email'] or '',verified=bool(sess['verified'])) if sess else None,csrf=sess['csrf'] if sess else None,smtp=smtp_ready(),registration=os.environ.get('ARUS_ALLOW_REGISTER','false')=='true',ai_model=CONFIG.get('ollama',{}).get('model','')))
+                    return self.respond(200,dict(user=dict(id=sess['user_id'],username=sess['username'],email=sess['email'] or '',verified=bool(sess['verified'])) if sess else None,csrf=sess['csrf'] if sess else None,smtp=smtp_ready(),registration=os.environ.get('ARUS_ALLOW_REGISTER','true').lower()=='true',ai_model=CONFIG.get('ollama',{}).get('model','')))
                 if path in ['/api/register','/api/login','/api/forgot','/api/token'] and post:
                     rate('auth:'+self.client_address[0],30,600)
                     if path=='/api/token':
@@ -315,7 +315,7 @@ class Handler(BaseHTTPRequestHandler):
                     D.require(re.fullmatch(r'[A-Za-z0-9_.-]{3,80}',username) is not None,'Username 3–80 karakter: huruf, angka, titik, garis bawah, atau tanda hubung.')
                     u=c.execute('SELECT * FROM users WHERE username=?',(username,)).fetchone()
                     if path=='/api/register':
-                        D.require(os.environ.get('ARUS_ALLOW_REGISTER','false')=='true','Pendaftaran belum dibuka oleh pemilik aplikasi.')
+                        D.require(os.environ.get('ARUS_ALLOW_REGISTER','true').lower()=='true','Pendaftaran belum dibuka oleh pemilik aplikasi.')
                         D.require(u is None,'Username sudah digunakan. Silakan pilih username lain.')
                         hashed=password_hash(p.get('password')); user=D.uid(); s=D.blank()
                         s['preferences']['name']=D.text(p.get('name','Pengguna Arus'))
